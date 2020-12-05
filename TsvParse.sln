@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TsvParse", "TsvParse\TsvParse.csproj", "{8EBD77E2-DC9F-409B-B74C-287208872045}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EBD77E2-DC9F-409B-B74C-287208872045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EBD77E2-DC9F-409B-B74C-287208872045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EBD77E2-DC9F-409B-B74C-287208872045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EBD77E2-DC9F-409B-B74C-287208872045}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7718A53-574D-42B3-BC42-23508AC6BD28}
+	EndGlobalSection
+EndGlobal
