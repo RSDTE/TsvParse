@@ -373,7 +373,7 @@ namespace TsvParse
                         }
                         if(len > 2) {
                             value = items[0];
-                            msg = items[2];
+                            msg = items[1];
                         } else {
                             value = items[0];
                         }
