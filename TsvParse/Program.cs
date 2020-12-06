@@ -10,8 +10,7 @@ namespace TsvParse
     {
         [STAThread]
         static async Task Main(string[] args) {
-            var path = @"C:\Users\RSDTE\Desktop\robot\TsvTest.tsv";
-            path = "./test.tsv";
+            var path = @"C:\Users\RSDTE\Desktop\robot\tsvdemo.tsv";
             TsvParser p = new TsvParser(path);
             await p.Parse();
             Console.WriteLine("Hello World!");

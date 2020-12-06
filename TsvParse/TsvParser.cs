@@ -124,7 +124,7 @@ namespace TsvParse
             }
             Console.WriteLine("-------------------------");
             //Console.WriteLine(suite);
-           // await File.WriteAllTextAsync("./test.tsv", suite.ToString());
+           await File.WriteAllTextAsync("./demo.tsv", suite.ToString());
         }
 
         /// <summary>

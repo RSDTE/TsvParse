@@ -400,105 +400,116 @@ namespace TsvParse
                 }
             }
 
-            foreach(var metadata in Metadatas) {
-                if(string.IsNullOrWhiteSpace(metadata.name) || string.IsNullOrWhiteSpace(metadata.value)) {
-                    continue;
+            if(Metadatas != null && this.Metadatas.Any()) {
+                foreach (var metadata in Metadatas) {
+                    if (string.IsNullOrWhiteSpace(metadata.name) || string.IsNullOrWhiteSpace(metadata.value)) {
+                        continue;
+                    }
+                    data[0] = "Metadata";
+                    data[1] = metadata.name;
+                    data[2] = metadata.value;
+                    if (!string.IsNullOrWhiteSpace(metadata.comment)) {
+                        data[3] = metadata.comment;
+                    }
+                    res.Append(WriteRow(data));
+                    Array.Clear(data, 0, data.Length);
                 }
-                data[0] = "Metadata";
-                data[1] = metadata.name;
-                data[2] = metadata.value;
-                if (!string.IsNullOrWhiteSpace(metadata.comment)) {
-                    data[3] = metadata.comment;
-                }
-                res.Append(WriteRow(data));
-                Array.Clear(data, 0, data.Length);
             }
 
-            foreach (var library in Libraries) {
-                if (string.IsNullOrWhiteSpace(library.path))
-                    continue;
-                data[0] = "Library";
-                data[1] = library.path;
-                var index = 2;
-                foreach(var arg in library.args) {
-                    if (string.IsNullOrWhiteSpace(data[0])) {
-                        data[0] = "...";
+           if(this.Libraries != null && this.Libraries.Any()) {
+                foreach (var library in Libraries) {
+                    if (string.IsNullOrWhiteSpace(library.path))
+                        continue;
+                    data[0] = "Library";
+                    data[1] = library.path;
+                    var index = 2;
+                    foreach (var arg in library.args) {
+                        if (string.IsNullOrWhiteSpace(data[0])) {
+                            data[0] = "...";
+                        }
+                        data[index++] = arg;
+                        if (index > 7) {
+                            res.Append(WriteRow(data));
+                            Array.Clear(data, 0, data.Length);
+                            index = 1;
+                        }
                     }
-                    data[index++] = arg;
-                    if (index > 7) {
-                        res.Append(WriteRow(data));
-                        Array.Clear(data, 0, data.Length);
-                        index = 1;
+                    if (!string.IsNullOrWhiteSpace(library.alias)) {
+                        data[index++] = "WITH NAME";
+                        if (index > 7) {
+                            res.Append(WriteRow(data));
+                            Array.Clear(data, 0, data.Length);
+                            index = 1;
+                        }
+                        if (string.IsNullOrWhiteSpace(data[0])) {
+                            data[0] = "...";
+                        }
+                        data[index++] = library.alias;
+                        if (index > 7) {
+                            res.Append(WriteRow(data));
+                            Array.Clear(data, 0, data.Length);
+                            index = 1;
+                        }
                     }
-                }
-                if (!string.IsNullOrWhiteSpace(library.alias)) {
-                    data[index++] = "WITH NAME";
-                    if (index > 7) {
-                        res.Append(WriteRow(data));
-                        Array.Clear(data, 0, data.Length);
-                        index = 1;
-                    }
-                    if (string.IsNullOrWhiteSpace(data[0])) {
-                        data[0] = "...";
-                    }
-                    data[index++] = library.alias;
-                    if (index > 7) {
-                        res.Append(WriteRow(data));
-                        Array.Clear(data, 0, data.Length);
-                        index = 1;
-                    }
-                }
 
-                if (!string.IsNullOrWhiteSpace(library.comment)) {
-                    if (string.IsNullOrWhiteSpace(data[0])) {
-                        data[0] = "...";
+                    if (!string.IsNullOrWhiteSpace(library.comment)) {
+                        if (string.IsNullOrWhiteSpace(data[0])) {
+                            data[0] = "...";
+                        }
+                        data[index] = library.comment;
                     }
-                    data[index] = library.comment;
+                    res.Append(WriteRow(data));
+                    Array.Clear(data, 0, data.Length);
                 }
-                res.Append(WriteRow(data));
-                Array.Clear(data, 0, data.Length);
             }
 
-            foreach(var resource in Resources) {
-                if (string.IsNullOrWhiteSpace(resource.path)) {
-                    continue;
+
+            if(this.Resources != null && this.Resources.Any()) {
+                foreach (var resource in Resources) {
+                    if (string.IsNullOrWhiteSpace(resource.path)) {
+                        continue;
+                    }
+                    data[0] = "Resource";
+                    data[1] = resource.path;
+                    if (!string.IsNullOrWhiteSpace(resource.comment)) {
+                        data[2] = resource.comment;
+                    }
+                    res.Append(WriteRow(data));
+                    Array.Clear(data, 0, data.Length);
                 }
-                data[0] = "Resource";
-                data[1] = resource.path;
-                if (!string.IsNullOrWhiteSpace(resource.comment)) {
-                    data[2] = resource.comment;
-                }
-                res.Append(WriteRow(data));
-                Array.Clear(data, 0, data.Length);
             }
 
-            foreach (var variable in Variables) {
-                if (string.IsNullOrWhiteSpace(variable.path))
-                    continue;
-                data[0] = "Variables";
-                data[1] = variable.path;
-                var index = 2;
-                foreach (var arg in variable.args) {
-                    if (string.IsNullOrWhiteSpace(data[0])) {
-                        data[0] = "...";
+            if (this.Variables != null && this.Variables.Any()) {
+                foreach (var variable in Variables) {
+                    if (string.IsNullOrWhiteSpace(variable.path))
+                        continue;
+                    data[0] = "Variables";
+                    data[1] = variable.path;
+                    var index = 2;
+                    foreach (var arg in variable.args) {
+                        if (string.IsNullOrWhiteSpace(data[0])) {
+                            data[0] = "...";
+                        }
+                        data[index++] = arg;
+                        if (index > 7) {
+                            res.Append(WriteRow(data));
+                            Array.Clear(data, 0, data.Length);
+                            index = 1;
+                        }
                     }
-                    data[index++] = arg;
-                    if (index > 7) {
-                        res.Append(WriteRow(data));
-                        Array.Clear(data, 0, data.Length);
-                        index = 1;
-                    }
-                }
 
-                if (!string.IsNullOrWhiteSpace(variable.comment)) {
-                    if (string.IsNullOrWhiteSpace(data[0])) {
-                        data[0] = "...";
+                    if (!string.IsNullOrWhiteSpace(variable.comment)) {
+                        if (string.IsNullOrWhiteSpace(data[0])) {
+                            data[0] = "...";
+                        }
+                        data[index] = variable.comment;
                     }
-                    data[index] = variable.comment;
+                    res.Append(WriteRow(data));
+                    Array.Clear(data, 0, data.Length);
                 }
-                res.Append(WriteRow(data));
-                Array.Clear(data, 0, data.Length);
             }
+
+            
 
             if(this.VariableSections != null && this.VariableSections.Any()) {
                 res.Append(WriteRow(data));
