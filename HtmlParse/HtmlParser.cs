@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using RobotModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,11 +88,11 @@ namespace HtmlParse
                         }
 
                         if(isAppend) {
-                            list.AddRange(current.SuiteSetup.value);
-                            comment = current.SuiteSetup.comment;
+                            list.AddRange(current.SuiteSetup.Values);
+                            comment = current.SuiteSetup.Comment;
                         }
 
-                        current.SuiteSetup = (value: list, comment: comment);
+                        current.SuiteSetup = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -110,11 +111,11 @@ namespace HtmlParse
                         }
 
                         if(isAppend) {
-                            list.AddRange(current.SuiteTeardown.value);
-                            comment = current.SuiteTeardown.comment;
+                            list.AddRange(current.SuiteTeardown.Values);
+                            comment = current.SuiteTeardown.Comment;
                         }
 
-                        current.SuiteTeardown = (value: list, comment: comment);
+                        current.SuiteTeardown = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -133,11 +134,11 @@ namespace HtmlParse
                         }
 
                         if(isAppend) {
-                            list.AddRange(current.TestSetup.value);
-                            comment = current.TestSetup.comment;
+                            list.AddRange(current.TestSetup.Values);
+                            comment = current.TestSetup.Comment;
                         }
 
-                        current.TestSetup = (value: list, comment: comment);
+                        current.TestSetup = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -156,11 +157,11 @@ namespace HtmlParse
                         }
 
                         if(isAppend) {
-                            list.AddRange(current.TestTeardown.value);
-                            comment = current.TestTeardown.comment;
+                            list.AddRange(current.TestTeardown.Values);
+                            comment = current.TestTeardown.Comment;
                         }
 
-                        current.TestTeardown = (value: list, comment: comment);
+                        current.TestTeardown =new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -181,7 +182,7 @@ namespace HtmlParse
                         } else {
                             value = arr[0];
                         }
-                        current.TestTimeout = (value: value, message: msg, comment: comment);
+                        current.TestTimeout = new Timeout{Value=value, Msg=msg, Comment=comment };
                     }
                 },
 
@@ -193,7 +194,7 @@ namespace HtmlParse
                         if (lastValue.StartsWith("#")) {
                             comment = lastValue;
                         }
-                        current.TestTemplate = (value: arr[0], comment: comment);
+                        current.TestTemplate = new ValueComment{Value=arr[0], Comment=comment };
                     }
                 },
 
@@ -235,9 +236,9 @@ namespace HtmlParse
                             name = arr[0];
                         }
                         if(current.Metadatas is null) {
-                            current.Metadatas = new List<(string name, string value, string comment)>();
+                            current.Metadatas = new List<Metadata>();
                         }
-                        current.Metadatas.Add((name: name, value: value, comment: comment));
+                        current.Metadatas.Add(new Metadata{Name= name, Value= value, Comment= comment });
                     }
                 },
 
@@ -245,24 +246,24 @@ namespace HtmlParse
                     "Library",
                     (current, arr, isAppend) => {
                         if(current.Libraries is null) {
-                            current.Libraries = new List<(string path, List<string> args, string alias, string comment)>();
+                            current.Libraries = new List<Library>();
                         }
                         // 追加
                         if (isAppend) {
                             var library = current.Libraries.Last();
                             current.Libraries.RemoveAt(current.Libraries.Count -1);
-                            if(library.args.Contains("WITH NAME")) {
+                            if(library.Args.Contains("WITH NAME")) {
                                 if(arr.Count > 2)
                                     return;
                                 var lastData = arr.Last();
                                 if (lastData.StartsWith("#")) {
-                                    library.comment = lastData;
+                                    library.Comment = lastData;
                                     if(arr.Count > 1) {
-                                        library.alias= arr[0];
+                                        library.Alias= arr[0];
                                     }
                                 }
                                 else {
-                                    library.alias = arr[0];
+                                    library.Alias = arr[0];
                                 }
                             } else {
                                 if(arr.Contains("WITH NAME")) {
@@ -271,19 +272,19 @@ namespace HtmlParse
                                     // 2. args .... WITH NAME, #comment;  X
                                     // 3. args .... WITH NAME, alias;
                                     var index = arr.IndexOf("WITH NAME");
-                                    library.args.AddRange(arr.Take(index));
+                                    library.Args.AddRange(arr.Take(index));
                                     if (arr.Last().StartsWith("#")) {
-                                        library.comment = arr.Last();
+                                        library.Comment = arr.Last();
                                     }
-                                    library.alias = arr[index+1];
+                                    library.Alias = arr[index+1];
                                 } else {
                                     // 1. args ..., #comment
                                     var count = arr.Count;
                                     if (arr.Last().StartsWith("#")) {
-                                        library.comment = arr.Last();
+                                        library.Comment = arr.Last();
                                         count -= 1;
                                     }
-                                    library.args.AddRange(arr.Take(count));
+                                    library.Args.AddRange(arr.Take(count));
                                 }
                             }
                             current.Libraries.Add(library);
@@ -305,7 +306,7 @@ namespace HtmlParse
                                 }
                                 args.Add(arr[i]);
                             }
-                            current.Libraries.Add((path, args, alias, comment));
+                            current.Libraries.Add(new Library{PathValue=path, Args=args, Alias= alias, Comment= comment });
                         }
 
                     }
@@ -315,14 +316,14 @@ namespace HtmlParse
                     "Resource",
                     (current, arr, isAppend) => {
                         if(current.Resources is null) {
-                            current.Resources = new List<(string path, string comment)>();
+                            current.Resources = new List<ValueComment>();
                         }
                         var path = arr[0];
                         var comment = string.Empty;
                         if (arr.Last().StartsWith("#")) {
                             comment = arr.Last();
                         }
-                        current.Resources.Add((path: path, comment: comment));
+                        current.Resources.Add(new ValueComment{ Value= path, Comment= comment });
                     }
                 },
 
@@ -330,17 +331,17 @@ namespace HtmlParse
                     "Variables",
                     (current, arr, isAppend) => {
                         if(current.Variables is null) {
-                            current.Variables = new List<(string path, List<string> args, string comment)>();
+                            current.Variables = new List<Variable>();
                         }
                         if (isAppend) {
                             var lastVaraible = current.Variables.Last();
                             current.Variables.RemoveAt(current.Variables.Count-1);
                             var count = arr.Count;
                             if (arr.Last().StartsWith("#")) {
-                                lastVaraible.comment = arr.Last();
+                                lastVaraible.Comment = arr.Last();
                                 count -= 1;
                             }
-                            lastVaraible.args.AddRange(arr.Take(count));
+                            lastVaraible.Args.AddRange(arr.Take(count));
                         } else {
                             var path = arr[0];
                             var comment = string.Empty;
@@ -357,7 +358,7 @@ namespace HtmlParse
                                 args.Add(arr[i]);
                             }
 
-                            current.Variables.Add((path, args, comment));
+                            current.Variables.Add(new Variable{ PathValue=path,Args= args,Comment= comment });
                         }
                     }
                 }
@@ -384,7 +385,7 @@ namespace HtmlParse
             }
 
             if (suite.Libraries != null && suite.Libraries.Any()) {
-                suite.Libraries.Where(item => item.args.Contains("WITH NAME")).ToList().ForEach(item => item.args.Remove("WITH NAME"));
+                suite.Libraries.Where(item => item.Args.Contains("WITH NAME")).ToList().ForEach(item => item.Args.Remove("WITH NAME"));
             }
             return suite;
         }
@@ -479,11 +480,11 @@ namespace HtmlParse
                             list = items;
                         }
 
-                        if(testcase.Setup.value != null) {
-                            list.AddRange(testcase.Setup.value);
-                            comment = testcase.Setup.comment;
+                        if(testcase.Setup.Values != null) {
+                            list.AddRange(testcase.Setup.Values);
+                            comment = testcase.Setup.Comment;
                         }
-                        testcase.Setup = (value: list, comment: comment);
+                        testcase.Setup = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -500,11 +501,11 @@ namespace HtmlParse
                             list = items;
                         }
 
-                        if(testcase.Teardown.value != null) {
-                            list.AddRange(testcase.Teardown.value);
-                            comment = testcase.Teardown.comment;
+                        if(testcase.Teardown.Values != null) {
+                            list.AddRange(testcase.Teardown.Values);
+                            comment = testcase.Teardown.Comment;
                         }
-                        testcase.Teardown = (value: list, comment: comment);
+                        testcase.Teardown =  new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -524,7 +525,7 @@ namespace HtmlParse
                         } else {
                             value = items[0];
                         }
-                        testcase.Timeout = (value: value, msg: msg, comment: comment);
+                        testcase.Timeout = new Timeout{Value=value, Msg=msg, Comment=comment };
                     }
                 },
                 {
@@ -535,7 +536,7 @@ namespace HtmlParse
                         if (lastValue.StartsWith("#")) {
                             comment = lastValue;
                         }
-                        testcase.Template = (value: items[0], comment: comment);
+                        testcase.Template = new ValueComment{Value=items.First(), Comment=comment };
                     }
                 },
                 {
@@ -664,11 +665,11 @@ namespace HtmlParse
                             list = items;
                         }
 
-                        if(keyword.Arguments.value != null) {
-                            list.AddRange(keyword.Arguments.value);
-                            comment = keyword.Arguments.comment;
+                        if(keyword.Arguments.Values != null) {
+                            list.AddRange(keyword.Arguments.Values);
+                            comment = keyword.Arguments.Comment;
                         }
-                        keyword.Arguments = (value: list, comment: comment);
+                        keyword.Arguments =  new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -685,11 +686,11 @@ namespace HtmlParse
                             list = items;
                         }
 
-                        if(keyword.Teardown.value != null) {
-                            list.AddRange(keyword.Teardown.value);
-                            comment = keyword.Teardown.comment;
+                        if(keyword.Teardown.Values != null) {
+                            list.AddRange(keyword.Teardown.Values);
+                            comment = keyword.Teardown.Comment;
                         }
-                        keyword.Teardown = (value: list, comment: comment);
+                        keyword.Teardown =  new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -706,11 +707,11 @@ namespace HtmlParse
                             list = items;
                         }
 
-                        if(keyword.ReutrnValue.value != null) {
-                            list.AddRange(keyword.ReutrnValue.value);
-                            comment = keyword.ReutrnValue.comment;
+                        if(keyword.ReutrnValue.Values != null) {
+                            list.AddRange(keyword.ReutrnValue.Values);
+                            comment = keyword.ReutrnValue.Comment;
                         }
-                        keyword.ReutrnValue = (value: list, comment: comment);
+                        keyword.ReutrnValue =  new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -730,7 +731,7 @@ namespace HtmlParse
                         } else {
                             value = items[0];
                         }
-                        keyword.Timeout = (value: value, msg: msg, comment: comment);
+                        keyword.Timeout = new Timeout{Value=value, Msg=msg, Comment=comment };
                     }
                 },
                 {

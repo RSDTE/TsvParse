@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsvParse", "TsvParse\TsvParse.csproj", "{8EBD77E2-DC9F-409B-B74C-287208872045}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlParse", "HtmlParse\HtmlParse.csproj", "{8BAE855A-3D97-4641-8241-5134E723BD88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlParse", "HtmlParse\HtmlParse.csproj", "{8BAE855A-3D97-4641-8241-5134E723BD88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotModel", "RobotModel\RobotModel.csproj", "{58794C49-0938-4107-82F2-EEF9F2BE5FE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8BAE855A-3D97-4641-8241-5134E723BD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BAE855A-3D97-4641-8241-5134E723BD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BAE855A-3D97-4641-8241-5134E723BD88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58794C49-0938-4107-82F2-EEF9F2BE5FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58794C49-0938-4107-82F2-EEF9F2BE5FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58794C49-0938-4107-82F2-EEF9F2BE5FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58794C49-0938-4107-82F2-EEF9F2BE5FE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

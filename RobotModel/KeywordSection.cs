@@ -4,20 +4,29 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace HtmlParse
+namespace RobotModel
 {
-    public class TestCaseSection
+    public class KeywordSection
     {
         private string name;
-        private string documentation;
-        private (List<string> value, string comment) setup;
-        private (List<string> value, string comment) teardown;
-        private (string value, string comment) template;
-        private (string value, string msg, string comment) timeout;
-        private List<string> tags;
         private DataTable code;
-
+        private string documentation;
+        private ValuesComment arguments = new ValuesComment();
+        private ValuesComment teardown = new ValuesComment();
+        private ValuesComment reutrnValue = new ValuesComment();
+        private Timeout timeout = new Timeout();
+        private List<string> tags = new List<string>();
         #region 属性
+        public DataTable Code {
+            get {
+                return this.code;
+            }
+
+            set {
+                this.code = value;
+            }
+        }
+
         public string Documentation {
             get {
                 return this.documentation;
@@ -28,17 +37,17 @@ namespace HtmlParse
             }
         }
 
-        public (List<string> value, string comment) Setup {
+        public ValuesComment Arguments {
             get {
-                return this.setup;
+                return this.arguments;
             }
 
             set {
-                this.setup = value;
+                this.arguments = value;
             }
         }
 
-        public (List<string> value, string comment) Teardown {
+        public ValuesComment Teardown {
             get {
                 return this.teardown;
             }
@@ -48,17 +57,17 @@ namespace HtmlParse
             }
         }
 
-        public (string value, string comment) Template {
+        public ValuesComment ReutrnValue {
             get {
-                return this.template;
+                return this.reutrnValue;
             }
 
             set {
-                this.template = value;
+                this.reutrnValue = value;
             }
         }
 
-        public (string value, string msg, string comment) Timeout {
+        public Timeout Timeout {
             get {
                 return this.timeout;
             }
@@ -78,16 +87,6 @@ namespace HtmlParse
             }
         }
 
-        public DataTable Code {
-            get {
-                return this.code;
-            }
-
-            set {
-                this.code = value;
-            }
-        }
-
         public string Name {
             get {
                 return this.name;
@@ -98,6 +97,5 @@ namespace HtmlParse
             }
         }
         #endregion
-
     }
 }

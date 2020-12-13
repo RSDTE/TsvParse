@@ -1,22 +1,16 @@
-﻿namespace HtmlParse
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RobotModel
 {
-    public class VariableSection
+    public class Timeout
     {
-
-        private string name;
         private string value;
+        private string msg;
         private string comment;
-
-        #region 属性
-        public string Name {
-            get {
-                return this.name;
-            }
-
-            set {
-                this.name = value;
-            }
-        }
 
         public string Value {
             get {
@@ -25,6 +19,16 @@
 
             set {
                 this.value = value;
+            }
+        }
+
+        public string Msg {
+            get {
+                return this.msg;
+            }
+
+            set {
+                this.msg = value;
             }
         }
 
@@ -37,6 +41,5 @@
                 this.comment = value;
             }
         }
-        #endregion
     }
 }

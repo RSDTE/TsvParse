@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Linq;
 using System.Data;
+using RobotModel;
 
 /// <summary>
 /// 1. robot framework 的 TSV 文件解析
@@ -164,11 +165,11 @@ namespace TsvParse
                             list = items;
                         }
 
-                        if(keyword.Arguments.value != null) {
-                            list.AddRange(keyword.Arguments.value);
-                            comment = keyword.Arguments.comment;
+                        if(keyword.Arguments.Values != null) {
+                            list.AddRange(keyword.Arguments.Values);
+                            comment = keyword.Arguments.Comment;
                         }
-                        keyword.Arguments = (value: list, comment: comment);
+                        keyword.Arguments = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -185,11 +186,11 @@ namespace TsvParse
                             list = items;
                         }
 
-                        if(keyword.Teardown.value != null) {
-                            list.AddRange(keyword.Teardown.value);
-                            comment = keyword.Teardown.comment;
+                        if(keyword.Teardown.Values != null) {
+                            list.AddRange(keyword.Teardown.Values);
+                            comment = keyword.Teardown.Comment;
                         }
-                        keyword.Teardown = (value: list, comment: comment);
+                        keyword.Teardown = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -206,11 +207,11 @@ namespace TsvParse
                             list = items;
                         }
 
-                        if(keyword.ReutrnValue.value != null) {
-                            list.AddRange(keyword.ReutrnValue.value);
-                            comment = keyword.ReutrnValue.comment;
+                        if(keyword.ReutrnValue.Values != null) {
+                            list.AddRange(keyword.ReutrnValue.Values);
+                            comment = keyword.ReutrnValue.Comment;
                         }
-                        keyword.ReutrnValue = (value: list, comment: comment);
+                        keyword.ReutrnValue = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -230,7 +231,7 @@ namespace TsvParse
                         } else {
                             value = items[0];
                         }
-                        keyword.Timeout = (value: value, msg: msg, comment: comment);
+                        keyword.Timeout =new Timeout{Value=value, Msg=msg, Comment=comment };
                     }
                 },
                 {
@@ -332,11 +333,11 @@ namespace TsvParse
                             list = items;
                         }
 
-                        if(testcase.Setup.value != null) {
-                            list.AddRange(testcase.Setup.value);
-                            comment = testcase.Setup.comment;
+                        if(testcase.Setup.Values != null) {
+                            list.AddRange(testcase.Setup.Values);
+                            comment = testcase.Setup.Comment;
                         }
-                        testcase.Setup = (value: list, comment: comment);
+                        testcase.Setup = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -353,11 +354,11 @@ namespace TsvParse
                             list = items;
                         }
 
-                        if(testcase.Teardown.value != null) {
-                            list.AddRange(testcase.Teardown.value);
-                            comment = testcase.Teardown.comment;
+                        if(testcase.Teardown.Values != null) {
+                            list.AddRange(testcase.Teardown.Values);
+                            comment = testcase.Teardown.Comment;
                         }
-                        testcase.Teardown = (value: list, comment: comment);
+                        testcase.Teardown = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
                 {
@@ -377,7 +378,7 @@ namespace TsvParse
                         } else {
                             value = items[0];
                         }
-                        testcase.Timeout = (value: value, msg: msg, comment: comment);
+                        testcase.Timeout = new Timeout{Value=value, Msg=msg, Comment=comment };
                     }
                 },
                 {
@@ -388,7 +389,7 @@ namespace TsvParse
                         if (lastValue.StartsWith("#")) {
                             comment = lastValue;
                         }
-                        testcase.Template = (value: items[0], comment: comment);
+                        testcase.Template = new ValueComment{Value=items.First(), Comment=comment };
                     }
                 },
                 {
@@ -536,12 +537,12 @@ namespace TsvParse
                             list = arr;
                         }
 
-                        if(current.SuiteSetup.value != null) {
-                            list.AddRange(current.SuiteSetup.value);
-                            comment = current.SuiteSetup.comment;
+                        if(current.SuiteSetup.Values != null) {
+                            list.AddRange(current.SuiteSetup.Values);
+                            comment = current.SuiteSetup.Comment;
                         }
 
-                        current.SuiteSetup = (value: list, comment: comment);
+                        current.SuiteSetup =new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -559,12 +560,12 @@ namespace TsvParse
                             list = arr;
                         }
 
-                        if(current.SuiteTeardown.value != null) {
-                            list.AddRange(current.SuiteTeardown.value);
-                            comment = current.SuiteTeardown.comment;
+                        if(current.SuiteTeardown.Values != null) {
+                            list.AddRange(current.SuiteTeardown.Values);
+                            comment = current.SuiteTeardown.Comment;
                         }
 
-                        current.SuiteTeardown = (value: list, comment: comment);
+                        current.SuiteTeardown = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -582,12 +583,12 @@ namespace TsvParse
                             list = arr;
                         }
 
-                        if(current.TestSetup.value != null) {
-                            list.AddRange(current.TestSetup.value);
-                            comment = current.TestSetup.comment;
+                        if(current.TestSetup.Values != null) {
+                            list.AddRange(current.TestSetup.Values);
+                            comment = current.TestSetup.Comment;
                         }
 
-                        current.TestSetup = (value: list, comment: comment);
+                        current.TestSetup = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -605,12 +606,12 @@ namespace TsvParse
                             list = arr;
                         }
 
-                        if(current.TestTeardown.value != null) {
-                            list.AddRange(current.TestTeardown.value);
-                            comment = current.TestTeardown.comment;
+                        if(current.TestTeardown.Values != null) {
+                            list.AddRange(current.TestTeardown.Values);
+                            comment = current.TestTeardown.Comment;
                         }
 
-                        current.TestTeardown = (value: list, comment: comment);
+                        current.TestTeardown = new ValuesComment{Values=list, Comment=comment };
                     }
                 },
 
@@ -631,7 +632,7 @@ namespace TsvParse
                         } else {
                             value = arr[0];
                         }
-                        current.TestTimeout = (value: value, message: msg, comment: comment);
+                        current.TestTimeout = new Timeout{Value=value, Msg=msg, Comment=comment };
                     }
                 },
 
@@ -643,7 +644,7 @@ namespace TsvParse
                         if (lastValue.StartsWith("#")) {
                             comment = lastValue;
                         }
-                        current.TestTemplate = (value: arr[0], comment: comment);
+                        current.TestTemplate = new ValueComment{Value=arr.First(), Comment=comment }; 
                     }
                 },
 
@@ -685,9 +686,9 @@ namespace TsvParse
                             name = arr[0];
                         }
                         if(current.Metadatas is null) {
-                            current.Metadatas = new List<(string name, string value, string comment)>();
+                            current.Metadatas = new List<Metadata>();
                         }
-                        current.Metadatas.Add((name: name, value: value, comment: comment));
+                        current.Metadatas.Add(new Metadata{Name=name, Value=value, Comment=comment});
                     }
                 },
 
@@ -695,7 +696,7 @@ namespace TsvParse
                     "Library",
                     (current, arr) => {
                         if(current.Libraries is null) {
-                            current.Libraries = new List<(string path, List<string> args, string alias, string comment)>();
+                            current.Libraries = new List<Library>();
                         }
                         var path = arr[0];
                         var args = new List<string>();
@@ -725,7 +726,7 @@ namespace TsvParse
                             }
                         }
 
-                        current.Libraries.Add((path, args, alias, comment));
+                        current.Libraries.Add(new Library{PathValue=path, Args=args, Alias=alias, Comment=comment });
                     }
                 },
 
@@ -733,14 +734,14 @@ namespace TsvParse
                     "Resource",
                     (current, arr) => {
                         if(current.Resources is null) {
-                            current.Resources = new List<(string path, string comment)>();
+                            current.Resources = new List<ValueComment>();
                         }
                         var path = arr[0];
                         var comment = string.Empty;
                         if (arr.Last().StartsWith("#")) {
                             comment = arr.Last();
                         }
-                        current.Resources.Add((path: path, comment: comment));
+                        current.Resources.Add(new ValueComment{Value=path, Comment=comment });
                     }
                 },
 
@@ -748,7 +749,7 @@ namespace TsvParse
                     "Variables",
                     (current, arr) => {
                         if(current.Variables is null) {
-                            current.Variables = new List<(string path, List<string> args, string comment)>();
+                            current.Variables = new List<Variable>();
                         }
                         var path = arr[0];
                         var comment = string.Empty;
@@ -765,7 +766,7 @@ namespace TsvParse
                             args.Add(arr[i]);
                         }
 
-                        current.Variables.Add((path, args, comment));
+                        current.Variables.Add( new Variable{PathValue=path, Args=args, Comment=comment });
                     }
                 }
             };

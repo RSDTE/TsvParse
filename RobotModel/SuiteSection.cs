@@ -1,32 +1,30 @@
-﻿using HtmlParse;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HtmlParse
+namespace RobotModel
 {
     public class SuiteSection
     {
         private string documentation;
-        private (List<string> value, string comment) suiteSetup;
-        private (List<string> value, string comment) suiteTeardown;
-        private (List<string> value, string comment) testSetup;
-        private (List<string> value, string comment) testTeardown;
-        private (string value, string message, string comment) testTimeout;
-        private (string value, string comment) testTemplate;
-        private List<string> forceTags;
-        private List<string> defaultTags;
-        private List<(string name, string value, string comment)> metadatas;
-        private List<(string path, List<string> args, string alias, string comment)> libraries;
-        private List<(string path, string comment)> resources;
-        private List<(string path, List<string> args, string comment)> variables;
+        private ValuesComment suiteSetup = new ValuesComment();
+        private ValuesComment suiteTeardown = new ValuesComment();
+        private ValuesComment testSetup = new ValuesComment();
+        private ValuesComment testTeardown = new ValuesComment();
+        private Timeout testTimeout = new Timeout();
+        private ValueComment testTemplate = new ValueComment();
+        private List<string> forceTags = new List<string>();
+        private List<string> defaultTags = new List<string>();
+        private List<Metadata> metadatas = new List<Metadata>();
+        private List<Library> libraries = new List<Library>();
+        private List<ValueComment> resources = new List<ValueComment>();
+        private List<Variable> variables = new List<Variable>();
 
-        private List<KeywordSection> keywordSections;
-        private List<TestCaseSection> testCaseSections;
-        private List<VariableSection> variableSections;
+        private List<KeywordSection> keywordSections = new List<KeywordSection>();
+        private List<TestCaseSection> testCaseSections = new List<TestCaseSection>();
+        private List<VariableSection> variableSections = new List<VariableSection>();
 
-        #region 属性
         public string Documentation {
             get {
                 return this.documentation;
@@ -37,7 +35,7 @@ namespace HtmlParse
             }
         }
 
-        public (List<string> value, string comment) SuiteSetup {
+        public ValuesComment SuiteSetup {
             get {
                 return this.suiteSetup;
             }
@@ -47,7 +45,7 @@ namespace HtmlParse
             }
         }
 
-        public (List<string> value, string comment) SuiteTeardown {
+        public ValuesComment SuiteTeardown {
             get {
                 return this.suiteTeardown;
             }
@@ -57,7 +55,7 @@ namespace HtmlParse
             }
         }
 
-        public (List<string> value, string comment) TestSetup {
+        public ValuesComment TestSetup {
             get {
                 return this.testSetup;
             }
@@ -67,7 +65,7 @@ namespace HtmlParse
             }
         }
 
-        public (List<string> value, string comment) TestTeardown {
+        public ValuesComment TestTeardown {
             get {
                 return this.testTeardown;
             }
@@ -77,7 +75,7 @@ namespace HtmlParse
             }
         }
 
-        public (string value, string message, string comment) TestTimeout {
+        public Timeout TestTimeout {
             get {
                 return this.testTimeout;
             }
@@ -87,7 +85,7 @@ namespace HtmlParse
             }
         }
 
-        public (string value, string comment) TestTemplate {
+        public ValueComment TestTemplate {
             get {
                 return this.testTemplate;
             }
@@ -117,7 +115,7 @@ namespace HtmlParse
             }
         }
 
-        public List<(string name, string value, string comment)> Metadatas {
+        public List<Metadata> Metadatas {
             get {
                 return this.metadatas;
             }
@@ -127,7 +125,7 @@ namespace HtmlParse
             }
         }
 
-        public List<(string path, List<string> args, string alias, string comment)> Libraries {
+        public List<Library> Libraries {
             get {
                 return this.libraries;
             }
@@ -137,7 +135,7 @@ namespace HtmlParse
             }
         }
 
-        public List<(string path, string comment)> Resources {
+        public List<ValueComment> Resources {
             get {
                 return this.resources;
             }
@@ -147,7 +145,7 @@ namespace HtmlParse
             }
         }
 
-        public List<(string path, List<string> args, string comment)> Variables {
+        public List<Variable> Variables {
             get {
                 return this.variables;
             }
@@ -186,7 +184,5 @@ namespace HtmlParse
                 this.variableSections = value;
             }
         }
-        #endregion
-
     }
 }

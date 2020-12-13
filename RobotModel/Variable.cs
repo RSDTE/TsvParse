@@ -2,34 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace TsvParse
+namespace RobotModel
 {
-    public class VariableSection
+    public class Variable
     {
-
-        private string name;
-        private string value;
+        private string pathValue;
+        private List<string> args;
         private string comment;
 
-        #region 属性
-        public string Name {
+        public string PathValue {
             get {
-                return this.name;
+                return this.pathValue;
             }
 
             set {
-                this.name = value;
+                this.pathValue = value;
             }
         }
 
-        public string Value {
+        public List<string> Args {
             get {
-                return this.value;
+                return this.args;
             }
 
             set {
-                this.value = value;
+                this.args = value;
             }
         }
 
@@ -42,7 +41,5 @@ namespace TsvParse
                 this.comment = value;
             }
         }
-        #endregion
-
     }
 }
